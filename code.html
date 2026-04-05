@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Hà Nội - Khám Phá Thủ Đô Ngàn Năm Văn Hiến</title>
+    <meta name="description" content="Khám phá Hà Nội với Go Hà Nội - Tour du lịch, địa điểm nổi bật, ẩm thực đường phố, trải nghiệm văn hóa độc đáo">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
+    <style>
+        :root {
+            --bg-main: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-dark: #2d3436;
+            --text-gray: #636e72;
+            --primary: #ff6b00;
+            --gradient-orange: linear-gradient(135deg, #ff4e00, #ffb000);
+            --modal-bg: #222222;
+            --modal-text: #cccccc;
+            --modal-title: #ff8c00;
+        }
+
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+        #home-view {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+
+        #home-view .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        #home-view .header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        #home-view .navbar { padding: 1rem 0; }
+        #home-view .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        #home-view .logo-text { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #DC2626, #F59E0B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #home-view .nav-menu { display: flex; list-style: none; gap: 2rem; }
+        #home-view .nav-link { text-decoration: none; color: #1F2937; font-weight: 500; transition: all 0.3s ease; position: relative; cursor: pointer;}
+        #home-view .nav-link:hover, #home-view .nav-link.active { color: #DC2626; }
+        #home-view .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: #DC2626; transition: width 0.3s ease; }
+        #home-view .nav-link:hover::after { width: 100%; }
+        #home-view .hero { min-height: 100vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: white; position: relative; }
+        #home-view .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); }
+        #home-view .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 20px; }
+        #home-view .hero-title { font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
+        #home-view .hero-subtitle { font-size: 1.5rem; margin-bottom: 2rem; opacity: 0.95; animation: fadeInUp 1s ease 0.2s both; }
+        #home-view .cta-button { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #DC2626, #F59E0B); color: white; padding: 1rem 2rem; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4); animation: fadeInUp 1s ease 0.4s both; }
+        #home-view .cta-button:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(220, 38, 38, 0.6); }
+        #home-view section { padding: 5rem 0; }
+        #home-view .section-title { font-size: 3rem; text-align: center; margin-bottom: 4rem; background: linear-gradient(135deg, #DC2626, #F59E0B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        #home-view .intro { background: #F8FAFC; }
+        #home-view .intro-content { text-align: center; }
+        #home-view .intro h2 { font-size: 2.5rem; margin-bottom: 2rem; color: #1F2937; }
+        #home-view .stats { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; }
+        #home-view .stat h3 { font-size: 3rem; color: #DC2626; margin-bottom: 0.5rem; }
+        #home-view .home-loc-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 250px 250px; gap: 20px; }
+        #home-view .h-loc-card { position: relative; border-radius: 20px; overflow: hidden; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.4s ease; }
+        #home-view .h-loc-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        #home-view .h-loc-card:hover img { transform: scale(1.08); }
+        #home-view .h-loc-card.large { grid-column: span 2; grid-row: span 2; }
+        #home-view .h-loc-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1)); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; color: white; }
+        #home-view .h-loc-overlay h3 { font-size: 1.8rem; margin-bottom: 0.5rem; transform: translateY(15px); transition: transform 0.4s ease; }
+        #home-view .h-loc-card.large .h-loc-overlay h3 { font-size: 2.5rem; }
+        #home-view .h-loc-overlay p { font-size: 1rem; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
+        #home-view .h-loc-card:hover .h-loc-overlay h3, #home-view .h-loc-card:hover .h-loc-overlay p { transform: translateY(0); opacity: 1; }
+        #home-view .h-loc-cta { background: linear-gradient(135deg, #DC2626, #F59E0B); border-radius: 20px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; padding: 30px; text-align: center; transition: transform 0.4s ease, box-shadow 0.4s; cursor: pointer;}
+        #home-view .h-loc-cta:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3); }
+        #home-view .cta-inner i:first-child { font-size: 3rem; margin-bottom: 15px; }
+        #home-view .cta-inner h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        #home-view .cta-inner p { font-size: 0.95rem; opacity: 0.9; margin-bottom: 20px; }
+        #home-view .btn-arrow { display: inline-flex; align-items: center; justify-content: center; background: white; color: #DC2626; width: 45px; height: 45px; border-radius: 50%; transition: transform 0.3s ease; font-size: 1.2rem; }
+        #home-view .h-loc-cta:hover .btn-arrow { transform: translateX(10px); }
+        #home-view .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        #home-view .food-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); transition: all 0.4s ease; cursor: pointer; }
+        #home-view .food-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        #home-view .food-card img { width: 100%; height: 250px; object-fit: cover; }
+        #home-view .food-info { padding: 1.5rem; }
+        #home-view .food-info h3 { margin-bottom: 1rem; color: #1F2937; }
+        #home-view .price { background: #F59E0B; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-weight: 600; }
+        #home-view .experience-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        #home-view .exp-item { text-align: center; padding: 2rem; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+        #home-view .exp-item:hover { transform: translateY(-5px); }
+        #home-view .exp-item i { font-size: 3rem; color: #F59E0B; margin-bottom: 1rem; }
+        #home-view .footer { background: #1F2937; color: white; padding: 4rem 0 2rem; }
+        #home-view .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        #home-view .footer-section h3, #home-view .footer-section h4 { margin-bottom: 1rem; color: #F59E0B; }
+        #home-view .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        #home-view .social-links a { width: 50px; height: 50px; background: #DC2626; color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; transition: all 0.3s ease; }
+        #home-view .social-links a:hover { background: #F59E0B; transform: translateY(-3px); }
+        #home-view .newsletter { display: flex; gap: 0.5rem; }
+        #home-view .newsletter input { flex: 1; padding: 0.8rem; border: none; border-radius: 30px; padding-left: 1rem; }
+        #home-view .newsletter button { background: #DC2626; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; }
+        #home-view .newsletter button:hover { background: #B91C1C; }
+        #home-view .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #374151; opacity: 0.8; }
+
+
+        @media (max-width: 900px) {
+            #home-view .home-loc-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            #home-view .h-loc-card.large { grid-column: span 1; grid-row: span 1; height: 350px; }
+            #home-view .h-loc-card { height: 250px; }
+            #home-view .h-loc-cta { padding: 3rem 2rem; }
+        }
+        @media (max-width: 768px) {
+            #home-view .nav-menu { display: none; }
+            #home-view .nav-container { flex-direction: column; gap: 1rem; }
+            #home-view .stats { flex-direction: column; gap: 2rem; }
+            #home-view .hero-title { font-size: 2.5rem; }
+            #home-view section { padding: 3rem 0; }
+            #home-view .section-title { font-size: 2rem; }
+        }
+        @media (max-width: 480px) {
+            #home-view .container { padding: 0 15px; }
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        html { scroll-behavior: smooth; }
+        img { loading: lazy; }
+
+
+        #dest-view {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        #dest-view * { font-family: 'Montserrat', sans-serif; }
+        #dest-view header { background: var(--bg-card); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.04); position: sticky; top: 0; z-index: 50; }
+        #dest-view .logo { font-size: 26px; font-weight: 800; background: var(--gradient-orange); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #dest-view nav ul { list-style: none; display: flex; gap: 35px; }
+        #dest-view nav ul li a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 15px; transition: color 0.3s; cursor: pointer; }
+        #dest-view nav ul li a:hover, #dest-view nav ul li a.active { color: var(--primary); }
+        #dest-view .section-header { text-align: center; padding: 60px 20px 40px; }
+        #dest-view .section-title { font-size: 40px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        #dest-view .section-title span { background: var(--gradient-orange); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #dest-view .destinations-container { max-width: 1200px; margin: 0 auto; padding: 0 5% 80px; display: flex; flex-direction: column; gap: 80px; }
+        #dest-view .dest-item { display: flex; align-items: center; position: relative; }
+        #dest-view .dest-item:nth-child(even) { flex-direction: row-reverse; }
+        #dest-view .dest-image-wrap { width: 65%; height: 450px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative; }
+        #dest-view .dest-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        #dest-view .dest-item:hover .dest-image-wrap img { transform: scale(1.05); }
+        #dest-view .dest-content { width: 45%; background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.08); z-index: 2; position: relative; }
+        #dest-view .dest-item:nth-child(odd) .dest-content { margin-left: -10%; }
+        #dest-view .dest-item:nth-child(even) .dest-content { margin-right: -10%; }
+        #dest-view .dest-index { font-size: 60px; font-weight: 800; color: rgba(255, 107, 0, 0.1); position: absolute; top: -10px; right: 30px; line-height: 1; z-index: -1; }
+        #dest-view .dest-name { font-size: 28px; font-weight: 800; color: var(--text-dark); margin-bottom: 20px; line-height: 1.3; }
+        #dest-view .dest-excerpt { font-size: 15px; color: var(--text-gray); line-height: 1.8; margin-bottom: 25px; text-align: justify; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+        #dest-view .read-more-btn { padding: 12px 30px; background: var(--bg-main); color: var(--primary); border: 2px solid var(--primary); border-radius: 30px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+        #dest-view .read-more-btn:hover { background: var(--gradient-orange); color: var(--bg-card); border-color: transparent; box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2); }
+        #dest-view .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        #dest-view .modal-overlay.active { opacity: 1; visibility: visible; }
+        #dest-view .modal-window { display: flex; width: 90%; max-width: 1000px; height: 80vh; background: var(--modal-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; }
+        #dest-view .modal-overlay.active .modal-window { transform: translateY(0); }
+        #dest-view .modal-image { flex: 1; position: relative; }
+        #dest-view .modal-image img { width: 100%; height: 100%; object-fit: cover; }
+        #dest-view .modal-content { flex: 1; padding: 50px 40px; display: flex; flex-direction: column; }
+        #dest-view .modal-title { color: var(--modal-title); font-size: 32px; font-weight: 800; margin-bottom: 25px; line-height: 1.3; }
+        #dest-view .modal-body { color: var(--modal-text); font-size: 15px; line-height: 1.8; text-align: justify; overflow-y: auto; padding-right: 15px; }
+        #dest-view .modal-body p { margin-bottom: 20px; }
+        #dest-view .close-modal { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: #fff; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 10; }
+        #dest-view .close-modal:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+        #dest-view .modal-body::-webkit-scrollbar { width: 5px; }
+        #dest-view .modal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        #dest-view .modal-body::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
+        #dest-view .modal-body::-webkit-scrollbar-thumb:hover { background: var(--modal-title); }
+
+
+        @media (max-width: 900px) {
+            #dest-view nav ul { display: none; }
+            #dest-view .destinations-container { gap: 50px; }
+            #dest-view .dest-item, #dest-view .dest-item:nth-child(even) { flex-direction: column; }
+            #dest-view .dest-image-wrap { width: 100%; height: 300px; }
+            #dest-view .dest-content { width: 90%; margin: -50px auto 0 !important; padding: 30px 20px; }
+            #dest-view .dest-name { font-size: 24px; }
+            #dest-view .modal-window { flex-direction: column; height: 90vh; }
+            #dest-view .modal-image { flex: none; height: 35%; }
+            #dest-view .modal-content { flex: 1; padding: 25px 20px; }
+            #dest-view .modal-title { font-size: 24px; margin-bottom: 15px; }
+            #dest-view .close-modal { top: 10px; right: 10px; background: rgba(0,0,0,0.5); border: none; }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div id="home-view">
+        <header class="header" id="header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="logo">
+                        <h2 class="logo-text">Go Hà Nội</h2>
+                    </div>
+                   
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="#home" class="nav-link active">Trang chủ</a></li>
+                        <li class="nav-item"><a href="#history-culture" class="nav-link">Lịch sử & Văn hóa</a></li>
+                        <li class="nav-item"><a onclick="chuyenTrang('dia-diem')" class="nav-link">Địa điểm</a></li>
+                        <li class="nav-item"><a href="#food" class="nav-link">Ẩm thực</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Khám Phá Hà Nội</h1>
+                <p class="hero-subtitle">Thủ Đô Ngàn Năm Văn Hiến<br> Nơi Giao Thoa Hiện Đại & Truyền Thống</p>
+                <a href="#locations" class="cta-button">
+                    <i class="fas fa-map-marker-alt"></i> Khám Phá Ngay
+                </a>
+            </div>
+        </section>
+
+
+        <section class="intro" id="intro">
+            <div class="container">
+                <div class="intro-content">
+                    <div class="intro-text">
+                        <h2>Vì Sao Chọn Hà Nội?</h2>
+                        <p>Không chỉ là trung tâm chính trị của Việt Nam, Hà Nội còn là nơi hội tụ tinh hoa văn hóa dân tộc suốt hơn một thiên niên kỷ. Thành phố mang trong mình vẻ đẹp rất riêng—nơi quá khứ và hiện tại hòa quyện, nơi dấu ấn kiến trúc Pháp cổ kính đan xen cùng nhịp sống sôi động của những con phố cổ. Đến Hà Nội là bước vào hành trình khám phá một không gian vừa trầm mặc, sâu lắng, vừa trẻ trung, hiện đại—một thành phố luôn khiến người ta nhớ mãi không quên.</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <h3>1000+</h3>
+                                <p>Năm lịch sử</p>
+                            </div>
+                            <div class="stat">
+                                <h3>36</h3>
+                                <p>Phố phường</p>
+                            </div>
+                            <div class="stat">
+                                <h3>1000+</h3>
+                                <p>Món ăn đường phố</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="history-culture" class="locations">
+            <div class="container">
+                <h2 class="section-title">Lịch sử & Văn hóa</h2>
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <img src="https://laodongthudo.vn/stores/news_dataimages/2023/012023/18/15/b0e22c7470a511641c3d9e8cabd68b27.png?rt=20230118161926" width="450px" height="450px" alt="Lịch sử & Văn hóa" style="border-radius: 15px; object-fit: cover; margin-bottom: 1rem;">
+                    <br>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d141702.7026829585!2d105.76207769632111!3d21.046067716249805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab9bd9861ca1%3A0xe7887f7b72ca17a9!2zSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1775218588475!5m2!1svi!2s" width="100%" height="450" style="border:0; border-radius: 15px; max-width: 700px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <p style="text-align: justify;"> Hà Nội là thủ đô lâu đời của Việt Nam, được hình thành từ khi vua Lý Thái Tổ dời đô về Thăng Long thời Lý vào năm 1010. Trải qua hơn một nghìn năm lịch sử với nhiều triều đại và biến động, Hà Nội không chỉ là trung tâm chính trị mà còn là cái nôi văn hóa, lưu giữ những giá trị truyền thống đặc sắc của dân tộc. Thành phố nổi bật với hệ thống di tích lịch sử phong phú như đình, chùa, văn miếu và khu phố cổ, đồng thời mang đậm dấu ấn kiến trúc Pháp từ thời kỳ thuộc địa.<br><br>Bên cạnh đó, văn hóa Hà Nội được thể hiện qua lối sống thanh lịch, tinh tế của người Tràng An, cùng với các loại hình nghệ thuật dân gian, ẩm thực phong phú và những lễ hội truyền thống đặc sắc. Sự giao thoa hài hòa giữa cổ kính và hiện đại đã tạo nên một Hà Nội vừa sâu lắng, trầm mặc, vừa năng động, phát triển, giữ vai trò quan trọng trong đời sống văn hóa – xã hội của đất nước.</p>
+                <p style="margin-top: 2rem; text-align: center;">
+                    <a href="lich-su-van-hoa.html" class="cta-button">Khám Phá Ngay</a>
+                </p>
+            </div>
+        </section>
+
+
+        <section id="locations" style="background-color: #F8FAFC;">
+            <div class="container">
+                <h2 class="section-title">Địa Điểm Nổi Bật</h2>
+               
+                <div class="home-loc-grid">
+                    <div class="h-loc-card large">
+                        <img src="https://static.vinwonders.com/production/pho-di-bo-ho-guom-banner.jpg">
+                        <div class="h-loc-overlay">
+                            <h3>Hồ Hoàn Kiếm & Phố đi bộ</h3>
+                            <p>Trái tim của Hà Nội, nơi giao thoa giữa vẻ đẹp hoài cổ và nhịp sống hiện đại sôi động.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="h-loc-card">
+                        <img src="https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2018/08/q.jpg">
+                        <div class="h-loc-overlay">
+                            <h3>Quảng trường Ba Đình & Lăng Bác</h3>
+                            <p>Niềm tự hào và thiêng liêng của dân tộc Việt Nam.</p>
+                        </div>
+                    </div>
+
+
+                    <a onclick="chuyenTrang('dia-diem')" class="h-loc-cta">
+                        <div class="cta-inner">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h3>Khám Phá Thêm</h3>
+                            <p>Xem chi tiết toàn bộ 12+ địa danh tuyệt đẹp không thể bỏ lỡ tại Hà Nội</p>
+                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="food" class="food">
+            <div class="container">
+                <h2 class="section-title">Ẩm Thực Hà Nội</h2>
+                <div class="food-grid">
+                    <div class="food-card">
+                        <img src="https://www.bonboncar.vn/blog/content/images/size/w2000/format/webp/2024/11/A-nh-chu-p-Ma-n-hi-nh-2024-11-18-lu-c-13.20.21.png" alt="Phở Hà Nội">
+                        <div class="food-info">
+                            <h3>Phở Hà Nội</h3>
+                            <p>Nước dùng trong veo, thịt bò mềm ngọt, bánh phở dai ngon.</p>
+                            <br>
+                            <span class="price">45.000₫</span>
+                        </div>
+                    </div>
+                    <div class="food-card">
+                        <img src="https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg" alt="Bún Chả">
+                        <div class="food-info">
+                            <h3>Bún Chả</h3>
+                            <p>Chả nướng thơm lừng, nước mắm chua ngọt đặc trưng.</p>
+                            <br>
+                            <span class="price">60.000₫</span>
+                        </div>
+                    </div>
+                    <div class="food-card">
+                        <img src="https://statics.vinwonders.com/banh-mi-ha-noi-2_1688279114.jpeg" alt="Bánh Mì">
+                        <div class="food-info">
+                            <h3>Bánh Mì Pate</h3>
+                            <p>Bánh mì giòn tan, pate béo ngậy, nhân đầy đặn.</p>
+                            <br>
+                            <span class="price">25.000₫</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="experience" class="experience" style="background-color: #F8FAFC;">
+            <div class="container">
+                <h2 class="section-title">Trải Nghiệm Độc Đáo</h2>
+                <div class="experience-content">
+                    <div class="experience-list">
+                        <div class="exp-item">
+                            <i class="fas fa-motorcycle"></i>
+                            <h4>Xe Ôm Cổ</h4>
+                            <p>Đạp xe vòng quanh Hồ Tây, cảm nhận nhịp sống Hà Nội.</p>
+                        </div>
+                        <div class="exp-item">
+                            <i class="fas fa-coffee"></i>
+                            <h4>Cà Phê Cổ</h4>
+                            <p>Ngồi ghế đẩu nhựa, nhâm nhi cà phê trứng đặc sản.</p>
+                        </div>
+                        <div class="exp-item">
+                            <i class="fas fa-theater-masks"></i>
+                            <h4>Múa Rối Nước</h4>
+                            <p>Xem múa rối nước - nghệ thuật dân gian độc đáo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer id="contact" class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Go Hà Nội</h3>
+                        <p>Đồng hành cùng bạn khám phá vẻ đẹp Hà Nội đích thực.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Liên Hệ</h4>
+                        <p><i class="fas fa-phone"></i> 024 123 4567</p>
+                        <p><i class="fas fa-envelope"></i> hello@gohanoi.vn</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 36 Hàng Bạc, Hoàn Kiếm, Hà Nội</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Đăng Ký Nhận Tin</h4>
+                        <p>Cập nhật thông tin và nhận ưu đãi sớm nhất!</p>
+                        <br>
+                        <form class="newsletter">
+                            <input type="email" placeholder="Email của bạn" required>
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 Go Hà Nội. Tất cả quyền được bảo lưu.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <div id="dest-view" style="display: none;">
+        <header>
+            <div class="logo">Go Hà Nội</div>
+            <nav>
+                <ul>
+                    <li><a onclick="chuyenTrang('trang-chu')">Trang chủ</a></li>
+                    <li><a href="#">Lịch sử & Văn hóa</a></li>
+                    <li><a href="#" class="active">Địa điểm</a></li>
+                    <li><a href="#">Ẩm thực</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </header>
+
+
+        <div class="section-header">
+            <h2 class="section-title">Địa điểm <span>Tham Quan</span></h2>
+        </div>
+
+
+        <div class="destinations-container" id="destinations-list"></div>
+
+
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-window">
+                <button class="close-modal" onclick="closeModal()">✕</button>
+                <div class="modal-image">
+                    <img id="modalImg" src="" alt="Chi tiết">
+                </div>
+                <div class="modal-content">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-body" id="modalBody"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function chuyenTrang(trangCachDien) {
+            var vungTrangChu = document.getElementById("home-view");
+            var vungDiaDiem = document.getElementById("dest-view");
+
+
+            if (trangCachDien === "dia-diem") {
+                vungTrangChu.style.display = "none";
+                vungDiaDiem.style.display = "block";
+            } else if (trangCachDien === "trang-chu") {
+                vungTrangChu.style.display = "block";
+                vungDiaDiem.style.display = "none";
+            }
+            window.scrollTo(0, 0);
+        }
+
+
+        const locationData = [
+            {
+                title: "Hồ Hoàn Kiếm & Phố đi bộ",
+                desc: "<p>Hồ Hoàn Kiếm không chỉ là trái tim của Hà Nội mà còn là một điểm đến mang đậm dấu ấn lịch sử và văn hóa. Mặt hồ phẳng lặng, in bóng Tháp Rùa cổ kính tạo nên một khung cảnh thơ mộng giữa lòng thành phố nhộn nhịp. Điểm nhấn của khu vực này còn có cầu Thê Húc rực rỡ sắc đỏ dẫn vào đền Ngọc Sơn – nơi thờ thần Văn Xương Đế Quân và danh tướng Trần Hưng Đạo. Kề bên là khu phố cổ, nơi du khách có thể tản bộ qua 36 phố phường, tận hưởng không khí hoài cổ và khám phá những món ăn đặc sản như phở bò, bún chả, bánh cuốn.</p><p>Ngay bên cạnh là phố đi bộ Hồ Gươm. Phố đi bộ Hồ Gươm là một trong những địa điểm vui chơi cuối tuần ở Hà Nội thu hút rất nhiều người dân Thủ đô đặc biệt là các bạn trẻ, sinh viên và du khách nước ngoài. Phố đi bộ Hồ Hoàn Kiếm hoạt động từ 19h - 24h mùa hè và 18h - 24 mùa đông, vào các buổi tối thứ 7 và chủ nhật. Phố đi bộ bao gồm 16 tuyến bố xung quanh Hồ Hoàn Kiếm và cấm các phương tiện lưu thông. Hòa mình vào phố đi bộ, du khách sẽ cảm nhận được sự đông vui, nhộn nhịp của các hoạt động tại đây. Từ những hoạt động đường phố đến cảnh người dân Thủ đô đi dạo… tất cả đều hiện lên vui nhộn và sống động.</p>",
+                img: "https://static.vinwonders.com/production/ho-hoan-kiem-banner.jpg"
+            },
+            {
+                title: "Quảng trường Ba Đình & Lăng Bác",
+                desc: "<p>Lăng Bác (Lăng Chủ tịch Hồ Chí Minh) là nơi an nghỉ của vị lãnh tụ kính yêu của dân tộc Việt Nam, thu hút hàng triệu du khách mỗi năm. Trước lăng là Quảng trường Ba Đình rộng lớn, nơi Bác Hồ đã đọc bản Tuyên ngôn Độc lập vào năm 1945. Lăng Chủ tịch mở cửa vào sáng thứ 3,4,5,7 và chủ nhật. Khi vào viếng lăng Bác, bạn chú ý ăn mặc chỉnh tề, không đem theo các thiết bị điện tử ghi hành và giữ trật tự trong lăng.</p><p>Nếu đã đặt chân tới mảnh đất ngàn năm văn hiến thì Lăng Bác – Quảng trường Ba Đình là địa điểm du lịch ở Hà Nội mà các bạn không thể bỏ qua. Nơi đây là trung tâm chính trị của Việt Nam với nhà Quốc hội, Phủ Chủ tịch, Bảo tàng Hồ Chí Minh,…</p>",
+                img: "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/08/lang-bac.jpg"
+            },
+            {
+                title: "Văn Miếu - Quốc Tử Giám",
+                desc: "<p>Văn Miếu - Quốc Tử Giám là quần thể di tích về trường đại học đầu tiên của Việt Nam, bao gồm khu Văn Miếu – Quốc Tử Giám, hồ Văn và vườn Giám, được biết đến là biểu tượng của truyền thống hiếu học. Được xây dựng vào thời vua Lý Thánh Tông (khoảng năm 1070), Văn Miếu là nơi thờ Chu Công, Khổng Tử và Tứ Phối. Quốc Tử Giám - trường đại học đầu tiên tại Việt Nam - được vua Lý Nhân Tông cho thành lập thêm vào năm 1076. Toạ lạc ở phía Nam Hoàng Thành Thăng Long, Văn Miếu - Quốc Tử Giám là địa điểm lui tới thường xuyên của giới sinh viên, học sinh Hà Thành, nhằm cầu nguyện điều may mắn trên con đường khoa cử. Nếu muốn tìm hiểu về một Đại Việt nghìn năm văn hiến và mục sở thị kiến trúc đặc trưng của thời đầu nhà Nguyễn, bạn nhất định không được \"lỡ hẹn\" với địa điểm du lịch Hà Nội này.</p>",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Hanoi_Temple_of_Literature_%28cropped%29.jpg/1280px-Hanoi_Temple_of_Literature_%28cropped%29.jpg"
+            },
+            {
+                title: "Nhà thờ lớn Hà Nội",
+                desc: "<p>Nằm ở 40 phố Nhà Chung, phường Hàng Trống, Nhà thờ lớn là một trong những điểm đến thú vị ở Hà Nội, nơi lui tới không chỉ của các tín đồ theo đạo mà còn là địa điểm quen thuộc của giới trẻ, khách du lịch tứ phương. Nhà thờ mang đậm dấu ấn kiến trúc Gothic với những mái vòm cao vút và cửa sổ kính màu rực rỡ. Được xây dựng từ cuối thế kỷ XIX, công trình này là một trong những nhà thờ cổ kính nhất của Hà Nội, thường xuyên diễn ra các nghi lễ quan trọng. Không chỉ là nơi hành lễ tôn giáo, khu vực quanh nhà thờ còn là điểm hẹn quen thuộc của giới trẻ với những quán cà phê vỉa hè và không gian mang đậm nét châu Âu cổ kính.</p>",
+                img: "https://cdn.xanhsm.com/2024/11/97d72c62-nha-tho-lon-ha-noi-1.jpg"
+            },
+            {
+                title: "Nhà tù Hỏa Lò",
+                desc: "<p>Nhà tù Hỏa Lò được thực dân Pháp xây dựng từ năm 1896 với tên gọi “Maison Central”, là nơi giam giữ những chiến sĩ cách mạng chống lại chế độ thực dân. Đây là một trong những công trình kiên cố vào loại bậc nhất Đông Dương khi đó. Sau ngày giải phóng thủ đô, nhà tù được đặt dưới quyền của chính quyền cách mạng. Từ năm 1963 đến 1975, nơi đây còn được sử dụng để làm nơi giam giữ những phi công Mỹ bị quân đội Việt Nam bắn rơi trong cuộc chiến tranh phá hoại miền Bắc. Ngày nay nhà tù Hỏa Lò trở thành di tích lịch sử đặc biệt với nhiều tư liệu quý giá được trưng bày và giữ gìn cẩn thận, thu hút hàng ngàn du khách trong và ngoài nước tới tham quan mỗi năm.</p>",
+                img: "https://library.hust.edu.vn/sites/default/files/Picture06012023.jpg"
+            },
+            {
+                title: "Phố sách Đinh Lễ",
+                desc: "<p>Nằm ngay cạnh hồ Hoàn Kiếm, phố sách Đinh Lễ là thiên đường cho những ai yêu thích sách. Con phố nhỏ này tập trung nhiều hiệu sách lâu đời, chuyên bán sách ngoại văn, sách kinh điển và các tác phẩm văn học nổi tiếng. Không chỉ là nơi tìm kiếm những cuốn sách hay, Đinh Lễ còn mang đến không gian yên tĩnh, thích hợp để dạo bộ và tận hưởng nét văn hóa đọc giữa lòng Hà Nội.</p>",
+                img: "https://static.vinwonders.com/production/pho-dinh-le-1.jpg"
+            },
+            {
+                title: "Hồ Tây",
+                desc: "<p>Hồ Tây là một trong những khu vui chơi ở Hà Nội cho giới trẻ lý tưởng nhất của Thành phố Hà Nội. Với khung cảnh rộng lớn, mặt nước trong xanh và những con đường ven hồ rợp bóng cây, nơi đây thu hút đông đảo người dân và du khách ghé thăm mỗi ngày. Buổi chiều, khi hoàng hôn buông xuống, khung cảnh Hồ Tây càng trở nên thơ mộng, tạo nên không gian lý tưởng để tản bộ hoặc đạp xe dạo quanh hồ. Đặc biệt, khu vực ven hồ còn nổi tiếng với nhiều món ăn đặc sản như bánh tôm, bún ốc và kem dừa,...</p>",
+                img: "https://static.vinwonders.com/production/ho-tay-13.jpg"
+            },
+            {
+                title: "Bảo tàng Dân tộc học Việt Nam",
+                desc: "<p>Đây là nơi lưu giữ văn hóa của 54 dân tộc Việt Nam với các khu nhà sàn, mô hình làng bản, trưng bày trang phục, công cụ lao động truyền thống. Trẻ em có thể tham gia các hoạt động trải nghiệm như làm đồ thủ công, xem múa rối nước.</p>",
+                img: "https://sovhtt.hanoi.gov.vn/wp-content/uploads/2016/10/1-35-600x411.jpg"
+            },
+            {
+                title: "Phố cổ Hà Nội",
+                desc: "<p>Tồn tại từ thời Lý - Trần, nằm ở khu vực trung tâm quận Hoàn Kiếm, Phố Cổ Hà Nội là khu đô thị cổ tồn tại hàng trăm năm. Phố cổ là \"linh hồn\" văn hóa nghìn năm văn hiến với đặc trưng 36 phố phường, nơi từng tập trung sản xuất và buôn bán hàng hóa truyền thống. Nổi tiếng với các ngôi nhà ống lâu đời, ẩm thực đường phố đặc sắc (phở, bún chả), chợ Đồng Xuân và các làng nghề lâu đời, vi vu phố cổ Hà Nội, bạn chẳng những thu vào tầm mắt lối kiến trúc cổ kính độc đáo, nhịp sống êm đềm đặc trưng mà còn có cơ hội mua sắm quà lưu niệm thủ công độc đáo và thưởng thức món ngon Hà Nội đậm vị.</p>",
+                img: "https://media.vneconomy.vn/images/upload/2025/04/29/541cdf45-cbd1-4fbd-bc89-c839d7e0fe37.png?w=1200"
+            },
+            {
+                title: "Nhà hát lớn Hà Nội",
+                desc: "<p>Nằm ở số 1 Tràng Tiền, nhà hát Lớn Hà Nội là công trình kiến trúc nguy nga, tráng lệ, được xếp hạng Di tích cấp Quốc gia. Với \"tuổi đời\" hơn 100 năm (từ 1911 đến nay), Nhà Hát Lớn Hà Nội đã trở thành \"gương mặt đại diện\" cho nét đẹp thành phố. Nơi đây gắn liền với nhiều sự kiện quan trọng của Thủ đô. Du khách có thể kết hợp tham quan kiến trúc Nhà Hát Lớn Hà Nội và xem các buổi trình diễn nghệ thuật đặc sắc. Nhà hát sở hữu kiến trúc độc đáo, là điểm du lịch nổi tiếng, thu hút đông đảo du khách tìm đến tham quan, check in khi đặt chân đến Hà Nội.</p>",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Hanoi_Opera_House_-_detail.jpg/960px-Hanoi_Opera_House_-_detail.jpg"
+            },
+            {
+                title: "Hoàng thành Thăng Long",
+                desc: "<p>Hoàng thành Thăng Long là quần thể di tích gắn liền với sự phát triển của Thăng Long – Hà Nội, được các triều vua xây dựng trong nhiều giai đoạn lịch sử. Đây cũng là di tích quan trọng bậc nhất trong hệ thống các di tích lịch sử của Việt Nam. Đến Hoàng thành Thăng Long du khách có thể tham quan những địa điểm nổi bật như khu khảo cổ học số 18 Hoàng Diệu, Đoan Môn, Điện Kính Thiên, Bắc Môn (thành Cửa Bắc)…</p>",
+                img: "https://special.nhandan.vn/hoang-thanh-Thang-Long/assets/PniZIAFPNI/ht10-2048x1536.jpg"
+            },
+            {
+                title: "Con đường gốm sứ",
+                desc: "<p>Con đường gốm sứ được xây dựng năm 2008 nhân dịp kỷ niệm 1000 năm Thăng Long – Hà Nội là một trong những địa điểm du lịch độc đáo không thể bỏ qua khi đến với thủ đô. Nơi đây đã được tổ chức kỷ lục Guiness công nhận là bức tranh gốm dài nhất thế giới.</p>",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Con_%C4%91%C6%B0%E1%BB%9Dng_g%E1%BB%91m_s%E1%BB%A9_ven_s%C3%B4ng_H%E1%BB%93ng_021020091714-New.jpg/960px-Con_%C4%91%C6%B0%E1%BB%9Dng_g%E1%BB%91m_s%E1%BB%A9_ven_s%C3%B4ng_H%E1%BB%93ng_021020091714-New.jpg"
+            },
+            {
+                title: "Bảo tàng Lịch sử Quân sự Việt Nam",
+                desc: "<p>Bảo tàng Lịch sử Quân sự Việt Nam là một công trình văn hóa đặc biệt tiêu biểu, nơi bảo tồn và phát huy tinh hoa di sản văn hóa quân sự của dân tộc, đáp ứng nhu cầu nghiên cứu, học tập, tham quan và hưởng thụ văn hóa của các tầng lớp nhân dân trong nước và du khách quốc tế. Đến với Bảo tàng Lịch sử Quân sự Việt Nam, du khách có thể tận mắt chứng kiến các vũ khí, trang bị của Quân đội và nhân dân Việt Nam sử dụng trong kháng chiến chống Pháp, Mỹ xâm lược và sử dụng trong huấn luyện, sẵn sàng chiến đấu thời kỳ xây dựng và bảo vệ đất nước và được tìm hiểu thêm về lịch sử Việt Nam.</p>",
+                img: "https://xdcs.cdnchinhphu.vn/446259493575335936/2024/10/4/btlsqsvn2-1728040406462-17280404069991831436646.jpg"
+            },
+            {
+                title: "Phố Phan Đình Phùng",
+                desc: "<p>Không còn gì phải bàn cãi khi con phố Phan Đình Phùng được xem là một trong những con phố lãng mạn nhất Hà Nội. Các cây xanh trên phố, đặc biệt là những cây sấu đã trải qua hàng thế kỷ, tạo nên một tán lá xanh ngút ngàn, như vòng tay ôm trọn cả phố. Đến Hà Nội mùa thu, hãy thử bước đi trong tà áo dài, mua vài nhánh hoa của cô chú ven đường và làm cho mình vài kiểu ảnh thật \"thơ\" sẽ là trải nghiệm không thể nào quên.</p>",
+                img: "https://statics.vinpearl.com/duong-phan-dinh-phung-1_1681545640.jpg"
+            }
+        ];
+
+
+        const listContainer = document.getElementById('destinations-list');
+        const modalOverlay = document.getElementById('modalOverlay');
+
+
+        function getExcerpt(htmlStr) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = htmlStr;
+            return tmp.textContent.substring(0, 200) + "...";
+        }
+
+
+        locationData.forEach((loc, index) => {
+            const num = (index + 1).toString().padStart(2, '0');
+           
+            const item = document.createElement('div');
+            item.className = 'dest-item';
+           
+            item.innerHTML = `
+                <div class="dest-image-wrap">
+                    <img src="${loc.img}" alt="${loc.title}">
+                </div>
+                <div class="dest-content">
+                    <div class="dest-index">${num}</div>
+                    <h3 class="dest-name">${loc.title}</h3>
+                    <div class="dest-excerpt">${getExcerpt(loc.desc)}</div>
+                    <button class="read-more-btn" onclick="openModal(${index})">Xem chi tiết</button>
+                </div>
+            `;
+            listContainer.appendChild(item);
+        });
+
+
+        function openModal(index) {
+            document.getElementById('modalImg').src = locationData[index].img;
+            document.getElementById('modalTitle').innerText = locationData[index].title;
+            document.getElementById('modalBody').innerHTML = locationData[index].desc;
+           
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+
+        window.onclick = function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
+
